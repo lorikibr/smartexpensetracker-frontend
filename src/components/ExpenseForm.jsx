@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { addExpense } from ".expenseApi";
+import { addExpense } from "../api/expenseApi";
 
-export default function ExpenseForm() {
+//Accept onExpenseAdded as a prop
+export default function ExpenseForm({ onExpenseAdded }) {
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
   const [date, setDate] = useState("");
@@ -9,9 +10,16 @@ export default function ExpenseForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await addExpense({ title, amount: parseFloat(amount), date });
+
+    //Clear input fields
     setTitle("");
     setAmount("");
     setDate("");
+
+    //Call the parent function to refresh the expense list
+    if (onExpenseAdded) {
+      onExpenseAdded();
+    }
   };
 
   return (

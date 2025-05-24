@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getExpenses, deleteExpense } from ".expenseApi";
+import { getExpenses, deleteExpense } from "../api/expenseApi";
 
 export default function ExpenseList() {
   const [expenses, setExpenses] = useState([]);
@@ -17,7 +17,7 @@ export default function ExpenseList() {
     <ul>
       {expenses.map((exp) => (
         <li key={exp.id}>
-          {exp.title} - ${exp.amount} on {exp.date}
+          {exp.title} - {exp.amount} denar on {exp.date}
           <button onClick={() => handleDelete(exp.id)}>Delete</button>
         </li>
       ))}
