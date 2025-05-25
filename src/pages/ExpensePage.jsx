@@ -1,20 +1,13 @@
 import { useEffect, useState } from "react";
 import ExpenseForm from "../components/ExpenseForm";
 import ExpenseList from "../components/ExpenseList";
-import { getExpenses } from "../api/expenseApi";
+import CategoryFilter from "../components/CategoryFilter";
+import { getExpenses } from "../api/ExpenseApi";
 
 export default function ExpensePage() {
   const [expenses, setExpenses] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("");
-  const categories = [
-    "Food",
-    "Transport",
-    "Utilities",
-    "Entertainment",
-    "Health",
-    "Other",
-  ];
 
   const fetchExpenses = async () => {
     try {
@@ -50,22 +43,11 @@ export default function ExpensePage() {
         onChange={(e) => setSearchQuery(e.target.value)}
       />
 
-      <select
-        className="mb-4 p-2 border rounded ml-2"
-        value={categoryFilter}
-        onChange={(e) => setCategoryFilter(e.target.value)}
-      >
-        <option value="">All Categories</option>
-        {categories.map((cat) => (
-          <option key={cat} value={cat}>
-            {cat}
-          </option>
-        ))}
-      </select>
+      <CategoryFilter value={categoryFilter} onChange={setCategoryFilter} />
 
       <ExpenseForm onExpenseAdded={fetchExpenses} />
       <ExpenseList
-        expenses={filteredExpenses} // pass filtered expenses
+        expenses={filteredExpenses}
         onExpenseUpdated={fetchExpenses}
       />
     </div>
