@@ -6,15 +6,25 @@ export default function ExpenseForm({ onExpenseAdded }) {
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
   const [date, setDate] = useState("");
+  const [category, setCategory] = useState("");
+  const categories = [
+    "Food",
+    "Transport",
+    "Utilities",
+    "Entertainment",
+    "Health",
+    "Other",
+  ];
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await addExpense({ title, amount: parseFloat(amount), date });
+    await addExpense({ title, amount: parseFloat(amount), date, category });
 
     //Clear input fields
     setTitle("");
     setAmount("");
     setDate("");
+    setCategory("");
 
     //Call the parent function to refresh the expense list
     if (onExpenseAdded) {
@@ -24,6 +34,15 @@ export default function ExpenseForm({ onExpenseAdded }) {
 
   return (
     <form onSubmit={handleSubmit} className="mb-4">
+      <select value={category} onChange={(e) => setCategory(e.target.value)}>
+        <option value="">Select category</option>
+        {categories.map((cat) => (
+          <option key={cat} value={cat}>
+            {cat}
+          </option>
+        ))}
+      </select>
+
       <input
         placeholder="Title"
         value={title}

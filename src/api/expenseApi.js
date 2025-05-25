@@ -17,3 +17,12 @@ export async function addExpense(expense) {
 export async function deleteExpense(id) {
   return await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
 }
+
+export async function updateExpense(id, updatedExpense) {
+  const res = await fetch(`${API_URL}/${id}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(updatedExpense),
+  });
+  return await res.json();
+}
